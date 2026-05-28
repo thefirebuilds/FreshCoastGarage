@@ -314,6 +314,22 @@
     function getExpectedDailyRate(vehicle) {
       if (!vehicle) return null;
 
+      const typicalDailyRate = vehicle.typicalDailyRate;
+      if (typicalDailyRate && typeof typicalDailyRate === "object") {
+        const low = Number(typicalDailyRate.low);
+        const high = Number(typicalDailyRate.high);
+
+        if (Number.isFinite(low) && Number.isFinite(high)) {
+          return low === high
+            ? `${formatDailyRate(low)}/day`
+            : `${formatDailyRate(low)}-${formatDailyRate(high)}/day`;
+        }
+
+        if (typeof typicalDailyRate.label === "string" && typicalDailyRate.label.trim()) {
+          return typicalDailyRate.label.trim().replace(/^Typical rate:\s*/i, "");
+        }
+      }
+
       const rawRate =
         vehicle.expectedDailyRate ??
         vehicle.expectedDailyRateUsd ??
@@ -376,13 +392,11 @@
         avif: normalizeImagePath(
           liveVehicle?.imageAvif ??
           liveVehicle?.imageAvifUrl ??
-          (imageFolder ? `${imageFolder}/cover.avif` : null) ??
           car.imageAvif
         ),
         webp: normalizeImagePath(
           liveVehicle?.imageWebp ??
-          liveVehicle?.imageWebpUrl ??
-          (imageFolder ? `${imageFolder}/cover.webp` : null)
+          liveVehicle?.imageWebpUrl
         ),
         image: normalizeImagePath(
           liveVehicle?.primaryImageUrl ??
@@ -415,12 +429,15 @@
     function renderCarCard(car, liveVehicle) {
   const inferred = inferAvailability(liveVehicle);
   const expectedDailyRate = getExpectedDailyRate(liveVehicle);
+  const dailyRateValue = typeof expectedDailyRate === "number"
+    ? `${formatDailyRate(expectedDailyRate)}<span>/day</span>`
+    : expectedDailyRate;
   const dailyRateHtml = expectedDailyRate === null
     ? ""
     : `
       <div class="daily-rate">
-        <span class="daily-rate-label">Expected daily rate</span>
-        <strong class="daily-rate-value">${formatDailyRate(expectedDailyRate)}<span>/day</span></strong>
+        <span class="daily-rate-label">Typical daily rate</span>
+        <strong class="daily-rate-value">${dailyRateValue}</strong>
       </div>
     `;
 
