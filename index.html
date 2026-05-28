@@ -504,11 +504,37 @@
       return vehicleMap.get(`name:${normalizeName(car.nickname)}`) || null;
     }
 
+    function getAvailabilityRank(vehicle) {
+      const today = getTodayKey();
+      const availableDates = Array.isArray(vehicle?.availableDates) ? vehicle.availableDates : [];
+
+      return {
+        openDays: availableDates.length,
+        availableToday: availableDates.includes(today) ? 1 : 0
+      };
+    }
+
     function renderFleet(vehicles) {
       const vehicleMap = buildVehicleMap(vehicles);
 
       const cardsHtml = fleet
-        .map(car => renderCarCard(car, findLiveVehicle(car, vehicleMap)))
+        .map((car, originalIndex) => {
+          const liveVehicle = findLiveVehicle(car, vehicleMap);
+          return {
+            car,
+            liveVehicle,
+            originalIndex,
+            rank: getAvailabilityRank(liveVehicle)
+          };
+        })
+        .sort((left, right) => {
+          return (
+            right.rank.openDays - left.rank.openDays ||
+            right.rank.availableToday - left.rank.availableToday ||
+            left.originalIndex - right.originalIndex
+          );
+        })
+        .map(({ car, liveVehicle }) => renderCarCard(car, liveVehicle))
         .join("");
 
       document.getElementById("car-cards").innerHTML = cardsHtml;
