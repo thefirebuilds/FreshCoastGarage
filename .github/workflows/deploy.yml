@@ -30,6 +30,7 @@ jobs:
           mirror --reverse --verbose --delete \
             --exclude-glob .git/ \
             --exclude-glob .github/ \
+            --exclude-glob api/api_config.php \
             --exclude-glob api/data/ \
             --exclude-glob images/*/ \
             --exclude .gitignore \
