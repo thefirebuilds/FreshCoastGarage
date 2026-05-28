@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Central Texas Brewery Map Links by Area</title>
+  <style>
+    :root {
+      --bg: #fbf8f2;
+      --card: #ffffff;
+      --ink: #25211c;
+      --muted: #6d6459;
+      --line: #e5dbcc;
+      --accent: #8b5e34;
+      --accent-soft: #f0e4d4;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.45;
+    }
+    header {
+      padding: 32px 24px 18px;
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+    h1 { margin: 0 0 8px; font-size: clamp(2rem, 4vw, 3.4rem); line-height: 1.05; }
+    .intro { max-width: 760px; color: var(--muted); margin: 0 0 18px; font-size: 1.02rem; }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0 4px; }
+    .button {
+      display: inline-block;
+      border: 1px solid var(--accent);
+      background: var(--accent);
+      color: #fff;
+      padding: 10px 14px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 650;
+    }
+    .button.secondary { background: transparent; color: var(--accent); }
+    main { max-width: 1120px; margin: 0 auto; padding: 0 24px 40px; }
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 12px;
+      margin: 18px 0 28px;
+    }
+    .summary-card {
+      display: block;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 14px 15px;
+      text-decoration: none;
+      color: inherit;
+      box-shadow: 0 6px 20px rgba(64, 47, 31, .05);
+    }
+    .summary-card strong { display: block; margin-bottom: 4px; }
+    .summary-card span { color: var(--muted); font-size: .92rem; }
+    section {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      margin: 20px 0;
+      overflow: hidden;
+      box-shadow: 0 8px 26px rgba(64, 47, 31, .05);
+    }
+    .section-head {
+      padding: 18px 20px;
+      background: linear-gradient(90deg, var(--accent-soft), #fff7ed);
+      border-bottom: 1px solid var(--line);
+    }
+    h2 { margin: 0 0 3px; font-size: 1.35rem; }
+    .section-note { color: var(--muted); margin: 0; font-size: .96rem; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: .82rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); background: #fffdf9; }
+    tr:last-child td { border-bottom: 0; }
+    a { color: #6f441f; }
+    .maplink { font-weight: 650; white-space: nowrap; }
+    .count { color: var(--muted); font-weight: 500; }
+    footer { max-width: 1120px; margin: 0 auto; padding: 0 24px 36px; color: var(--muted); font-size: .92rem; }
+    @media (max-width: 700px) {
+      th:nth-child(4), td:nth-child(4) { display: none; }
+      th, td { padding: 10px; }
+      .maplink { white-space: normal; }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>Central Texas Brewery Map Links</h1>
+  <p class="intro">Clustered by rough geography so you can plan a sane route instead of zig-zagging across half of Texas like a doomed little pinball. Use the CSV for Google My Maps import, or use the links below as a clickable backup.</p>
+  <div class="actions">
+    <a class="button" href="central_texas_breweries_google_mymaps.csv">Download/import CSV</a>
+    <a class="button secondary" href="https://www.google.com/maps/search/breweries+near+Austin+TX">Open Google Maps brewery search</a>
+  </div>
+</header>
+<main>
+  <div class="summary-grid">
+    <a class="summary-card" href="#north-austin-brewery-district"><strong>North Austin / Brewery District</strong><span>3 stops · Austin</span></a>
+    <a class="summary-card" href="#central-east-manor-road"><strong>Central East / Manor Road</strong><span>2 stops · Austin</span></a>
+    <a class="summary-card" href="#east-austin-airport-side"><strong>East Austin / Airport side</strong><span>3 stops · Austin, Del Valle</span></a>
+    <a class="summary-card" href="#south-austin-st.-elmo-78704"><strong>South Austin / St. Elmo / 78704</strong><span>3 stops · Austin</span></a>
+    <a class="summary-card" href="#northwest-lake-travis-hill-country"><strong>Northwest / Lake Travis / Hill Country</strong><span>4 stops · Austin, Lago Vista, Spicewood</span></a>
+    <a class="summary-card" href="#north-suburbs-cedar-park-leander-liberty-hill"><strong>North Suburbs / Cedar Park / Leander / Liberty Hill</strong><span>4 stops · Cedar Park, Leander, Liberty Hill</span></a>
+    <a class="summary-card" href="#northeast-suburbs-pflugerville-hutto-georgetown"><strong>Northeast Suburbs / Pflugerville / Hutto / Georgetown</strong><span>6 stops · Georgetown, Hutto, Pflugerville</span></a>
+    <a class="summary-card" href="#southwest-hill-country-driftwood-blanco-san-marcos"><strong>Southwest Hill Country / Driftwood / Blanco / San Marcos</strong><span>5 stops · Blanco, Driftwood, San Marcos</span></a>
+  </div>
+  <section id="north-austin-brewery-district">
+    <div class="section-head">
+      <h2>North Austin / Brewery District <span class="count">(3)</span></h2>
+      <p class="section-note">Metric/Kramer/Highland-ish cluster. This is one of the easiest clusters to hit without much driving.</p>
+    </div>
+    <table>
+      <thead><tr><th>Name</th><th>Address</th><th>Map</th><th>Source</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Celis Brewery</td>
+          <td>10001 Metric Blvd, Austin, TX 78758</td>
+          <td><a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Celis+Brewery+10001+Metric+Blvd%2C+Austin%2C+TX+78758">Open in Google Maps</a></td>
+          <td><a href="https://www.celisbeers.com/">source</a></td>
+        </tr>
+        <tr>
+          <td>Hopsquad Brewing</td>
+          <td>2307 Kramer Ln, Austin, TX 78758</td>
+          <td><a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Hopsquad+Brewing+2307+Kramer+Ln%2C+Austin%2C+TX+78758">Open in Google Maps</a></td>
+          <td><a href="https://www.hopsquad.com/">source</a></td>
+        </tr>
+        <tr>
+          <td>The Brewtorium Brewery and Kitchen</td>
+          <td>6015 Dillard Cir A, Austin, TX 78752</td>
+          <td><a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=The+Brewtorium+Brewery+and+Kitchen+6015+Dillard+Cir+A%2C+Austin%2C+TX+78752">Open in Google Maps</a></td>
+          <td><a href="https://thebrewtorium.com/">source</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  <section id="central-east-manor-road">
+    <div class="section-head">
+      <h2>Central East / Manor Road <span class="count">(2)</span></h2>
+      <p class="section-note">Compact east/central Austin pair with food-heavy neighborhood options nearby.</p>
+    </div>
+    <table>
+      <thead><tr><th>Name</th><th>Address</th><th>Map</th><th>Source</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Oddwood Brewing</td>
+          <td>3108 Manor Rd, Austin, TX 78723</td>
+          <td><a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Oddwood+Brewing+3108+Manor+Rd%2C+Austin%2C+TX+78723">Open in Google Maps</a></td>
+          <td><a href="https://www.oddwoodbrewing.com/contact">source</a></td>
+        </tr>
+        <tr>
+          <td>Blue Owl Brewing</td>
+          <td>2400 E Cesar Chavez St #300, Austin, TX 78702</td>
+          <td><a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Blue+Owl+Brewing+2400+E+Cesar+Chavez+St+%23300%2C+Austin%2C+TX+78702">Open in Google Maps</a></td>
+          <td><a href="https://blueowlbrewing.com/visit/">source</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  <section id="east-austin-airport-side">
+    <div class="section-head">
+      <h2>East Austin / Airport side <span class="count">(3)</span></h2>
+      <p class="section-note">East side and Del Valle. Live Oak is the airport-adjacent anchor here.</p>
+    </div>
+    <table>
+      <thead><tr><th>Name</th><th>Address</th><th>Map</th><th>Source</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Hi Sign Brewing</td>
+          <td>730 Shady Ln, Austin, TX 78702</td>
+          <td><a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Hi+Sign+Brewing+730+Shady+Ln%2C+Austin%2C+TX+78702">Open in Google Maps</a></td>
+          <td><a href="https://hisignbrewing.com/">source</a></td>
+        </tr>
+        <tr>
+          <td>Southern Heights</td>
+          <td>6014 Techni Center Dr Ste 2-101, Austin, TX 78721</td>
+          <td><a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Southern+Heights+6014+Techni+Center+Dr+Ste+2-101%2C+Austin%2C+TX+78721">Open in Google Maps</a></td>
+          <td><a href="https://www.southernheightsbrewing.com/contact">source</a></td>
+        </tr>
+        <tr>
+          <td>Live Oak Brewing Co</td>
+          <td>1615 Crozier Ln, Del Valle, TX 78617</td>
+          <td><a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Live+Oak+Brewing+Co+1615+Crozier+Ln%2C+Del+Valle%2C+TX+78617">Open in Google Maps</a></td>
+          <td><a href="https://www.liveoakbrewing.com/contact-us">source</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  <section id="south-austin-st.-elmo-78704">
+    <div class="section-head">
+      <h2>South Austin / St. Elmo / 78704 <span class="count">(3)</span></h2>
+      <p class="section-note">Good south Austin crawl territory with short hops between stops.</p>
+    </div>
+    <table>
+      <thead><tr><th>Name</th><th>Address</th><th>Map</th><th>Source</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Nomadic Beerworks</td>
+          <td>3804 Woodbury Dr Ste A, Austin, TX 78704</td>
+          <td><a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Nomadic+Beerworks+3804+Woodbury+Dr+Ste+A%2C+Austin%2C+TX+78704">Open in Google Maps</a></td>
+          <td><a href="https://www.austintexas.org/listings/nomadic-beerworks/13200/">source</a></td>
+        </tr>
+        <tr>
+          <td>Vacancy Brewing</td>
+          <td>415 E St Elmo Rd 1-D2, Austin, TX 78745</td>
+          <td><a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Vacancy+Brewing+415+E+St+Elmo+Rd+1-D2%2C+Austin%2C+TX+78745">Open in Google Maps</a></td>
+          <td><a href="https://www.vacancybrewing.com/contact">source</a></td>
+        </tr>
+        <tr>
+          <td>Fast Friends Beer Co</td>
+          <td>7313 S I-35 Frontage Rd, Austin, TX 78744</td>
+          <td><a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Fast+Friends+Beer+Co+7313+S+I-35+Frontage+Rd%2C+Austin%2C+TX+78744">Open in Google Maps</a></td>
+          <td><a href="https://www.austintexas.org/listings/fast-friends-beer-company/14285/">source</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  <section id="northwest-lake-travis-hill-country">
+    <div class="section-head">
+      <h2>Northwest / Lake Travis / Hill Country <span class="count">(4)</span></h2>
+      <p class="section-note">Pretty-drive cluster. Better as an afternoon outing than a tight urban crawl.</p>
+    </div>
+    <table>
+      <thead><tr><th>Name</th><th>Address</th><th>Map</th><th>Source</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Oasis Texas Brewing Company</td>
+          <td>6550 Comanche Trl, Austin, TX 78732</td>
+          <td><a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Oasis+Texas+Brewing+Company+6550+Comanche+Trl%2C+Austin%2C+TX+78732">Open in Google Maps</a></td>
+          <td><a href="https://www.austintexas.org/listings/oasis-texas-brewing-company/7500/">source</a></td>
+        </tr>
+        <tr>
+          <td>Lago Vista Brewing Co</td>
+          <td>8001 Bronco Ln, Lago Vista, TX 78645</td>
+          <td><a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Lago+Vista+Brewing+Co+8001+Bronco+Ln%2C+Lago+Vista%2C+TX+78645">Open in Google Maps</a></td>
+          <td><a href="https://www.lagovistabrewingco.com/contact-2">source</a></td>
+        </tr>
+        <tr>
+          <td>Frontyard Brewing</td>
+          <td>4514 Bob Wire Rd, Spicewood, TX 78669</td>
+          <td><a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Frontyard+Brewing+4514+Bob+Wire+Rd%2C+Spicewood%2C+TX+78669">Open in Google Maps</a></td>
+          <td><a href="https://www.frontyardbrewing.com/">source</a></td>
+        </tr>
+        <tr>
+          <td>Highway 71 Brewing</td>
+          <td>22111 State Hwy 71 #601, Spicewood, TX 78669</td>
+          <td><a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Highway+71+Brewing+22111+State+Hwy+71+%23601%2C+Spicewood%2C+TX+78669">Open in Google Maps</a></td>
+          <td><a href="https://www.hwy71brewing.com/">source</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  <section id="north-suburbs-cedar-park-leander-liberty-hill">
+    <div class="section-head">
+      <h2>North Suburbs / Cedar Park / Leander / Liberty Hill <span class="count">(4)</span></h2>
+      <p class="section-note">Northwest-suburban run. Works well if you are already coming from Cedar Park/Leander.</p>
+    </div>
+    <table>
+      <thead><tr><th>Name</th><th>Address</th><th>Map</th><th>Source</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Red Horn Parmer Lane</td>
+          <td>13010 W Parmer Ln #800, Cedar Park, TX 78613</td>
+          <td><a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Red+Horn+Parmer+Lane+13010+W+Parmer+Ln+%23800%2C+Cedar+Park%2C+TX+78613">Open in Google Maps</a></td>
+          <td><a href="https://business.cedarparkchamber.org/list/member/red-horn-coffee-house-and-brewing-co-2530">source</a></td>
+        </tr>
+        <tr>
+          <td>Red Horn Scottsdale Drive</td>
+          <td>1615 Scottsdale Dr, Building 1, Suite 110, Cedar Park, TX 78641</td>
+          <td><a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Red+Horn+Scottsdale+Drive+1615+Scottsdale+Dr%2C+Building+1%2C+Suite+110%2C+Cedar+Park%2C+TX+78641">Open in Google Maps</a></td>
+          <td><a href="https://visitcedarparktexas.com/listing/red-horn-coffee-house-and-brewing-co-scottsdale-dr/268/">source</a></td>
+        </tr>
+        <tr>
+          <td>5th Element Brewing</td>
+          <td>100 E Evans St, Leander, TX 78641</td>
+          <td><a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=5th+Element+Brewing+100+E+Evans+St%2C+Leander%2C+TX+78641">Open in Google Maps</a></td>
+          <td><a href="https://5thelementbrewing.com/">source</a></td>
+        </tr>
+        <tr>
+          <td>Slot-T Beer Co.</td>
+          <td>931 Main St, Liberty Hill, TX 78642</td>
+          <td><a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Slot-T+Beer+Co.+931+Main+St%2C+Liberty+Hill%2C+TX+78642">Open in Google Maps</a></td>
+          <td><a href="https://slottbeerco.com/">source</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  <section id="northeast-suburbs-pflugerville-hutto-georgetown">
+    <div class="section-head">
+      <h2>Northeast Suburbs / Pflugerville / Hutto / Georgetown <span class="count">(6)</span></h2>
+      <p class="section-note">Northeast arc. This one is drivable, but the endpoints stretch out.</p>
+    </div>
+    <table>
+      <thead><tr><th>Name</th><th>Address</th><th>Map</th><th>Source</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Prost Alehouse Texas</td>
+          <td>115 E Main St, Pflugerville, TX 78660</td>
+          <td><a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Prost+Alehouse+Texas+115+E+Main+St%2C+Pflugerville%2C+TX+78660">Open in Google Maps</a></td>
+          <td><a href="https://prostalehouse.com/contact">source</a></td>
+        </tr>
+        <tr>
+          <td>Spirit of Texas Brewstillery</td>
+          <td>1715 Dalshank St, Pflugerville, TX 78660</td>
+          <td><a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Spirit+of+Texas+Brewstillery+1715+Dalshank+St%2C+Pflugerville%2C+TX+78660">Open in Google Maps</a></td>
+          <td><a href="https://spiritoftx.com/visit">source</a></td>
+        </tr>
+        <tr>
+          <td>Old Gregg Brewing</td>
+          <td>1900 E Howard Ln, Building H, Pflugerville, TX 78660</td>
+          <td><a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Old+Gregg+Brewing+1900+E+Howard+Ln%2C+Building+H%2C+Pflugerville%2C+TX+78660">Open in Google Maps</a></td>
+          <td><a href="https://oldgreggbrewingco.com/">source</a></td>
+        </tr>
+        <tr>
+          <td>Cottonwood Creek Brewery</td>
+          <td>610 US-79, Hutto, TX 78634</td>
+          <td><a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Cottonwood+Creek+Brewery+610+US-79%2C+Hutto%2C+TX+78634">Open in Google Maps</a></td>
+          <td><a href="https://www.cottonwoodcreekbrewery.com/blank-1-1-2">source</a></td>
+        </tr>
+        <tr>
+          <td>Power Brewing Project</td>
+          <td>3333 County Rd 119 Suite 130, Hutto, TX 78634</td>
+          <td><a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Power+Brewing+Project+3333+County+Rd+119+Suite+130%2C+Hutto%2C+TX+78634">Open in Google Maps</a></td>
+          <td><a href="https://www.powerbrewingproject.com/contact">source</a></td>
+        </tr>
+        <tr>
+          <td>Red Horn – Georgetown</td>
+          <td>109 W 7th St #105, Georgetown, TX 78626</td>
+          <td><a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Red+Horn+%E2%80%93+Georgetown+109+W+7th+St+%23105%2C+Georgetown%2C+TX+78626">Open in Google Maps</a></td>
+          <td><a href="https://redhornbrew.com/pages/locations">source</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  <section id="southwest-hill-country-driftwood-blanco-san-marcos">
+    <div class="section-head">
+      <h2>Southwest Hill Country / Driftwood / Blanco / San Marcos <span class="count">(5)</span></h2>
+      <p class="section-note">Big-distance scenic cluster. Treat this as a road-trip route, not a bar hop.</p>
+    </div>
+    <table>
+      <thead><tr><th>Name</th><th>Address</th><th>Map</th><th>Source</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Vista Brewing</td>
+          <td>13551 FM 150, Driftwood, TX 78619</td>
+          <td><a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Vista+Brewing+13551+FM+150%2C+Driftwood%2C+TX+78619">Open in Google Maps</a></td>
+          <td><a href="https://www.vistabrewingtx.com/contact">source</a></td>
+        </tr>
+        <tr>
+          <td>Lone Man Mountain Brewing Co</td>
+          <td>2825 Lone Man Mountain Rd, Driftwood, TX 78619</td>
+          <td><a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Lone+Man+Mountain+Brewing+Co+2825+Lone+Man+Mountain+Rd%2C+Driftwood%2C+TX+78619">Open in Google Maps</a></td>
+          <td><a href="https://wimberleyvalleywinery.com/craft-brewery-wimberley-tx-lone-man-mountain-brewing-co/">source</a></td>
+        </tr>
+        <tr>
+          <td>Roughhouse Brewing</td>
+          <td>680 Oakwood Loop, San Marcos, TX 78666</td>
+          <td><a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Roughhouse+Brewing+680+Oakwood+Loop%2C+San+Marcos%2C+TX+78666">Open in Google Maps</a></td>
+          <td><a href="https://www.roughhousebrewing.com/visit">source</a></td>
+        </tr>
+        <tr>
+          <td>Thirsty Planet Brewing</td>
+          <td>110 E MLK Dr Suite 130, San Marcos, TX 78666</td>
+          <td><a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Thirsty+Planet+Brewing+110+E+MLK+Dr+Suite+130%2C+San+Marcos%2C+TX+78666">Open in Google Maps</a></td>
+          <td><a href="https://www.thirstygoat.com/">source</a></td>
+        </tr>
+        <tr>
+          <td>Real Ale Brewing Co</td>
+          <td>2250 N US Hwy 281, Blanco, TX 78606</td>
+          <td><a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Real+Ale+Brewing+Co+2250+N+US+Hwy+281%2C+Blanco%2C+TX+78606">Open in Google Maps</a></td>
+          <td><a href="https://realalebrewing.com/answers/contact/">source</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</main>
+<footer>
+  <p>Areas are approximate and optimized for route-planning, not strict neighborhood boundaries. Always check hours before you roll out, because brewery schedules can be chaos in a cute glass.</p>
+</footer>
+</body>
+</html>

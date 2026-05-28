@@ -1,0 +1,454 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fresh Coast Garage</title>
+  <link rel="icon" type="image/jpeg" href="images/icon.jpg" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .car-card {
+      position: relative;
+      display: block;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .car-status {
+      margin-top: 0.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      min-height: 3.6rem;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      line-height: 1;
+      background: #e8eef7;
+      color: #24415d;
+    }
+
+    .status-pill.status-loading {
+      background: #ececec;
+      color: #666;
+    }
+
+    .status-pill.status-available {
+      background: #dff6e4;
+      color: #1f6b35;
+    }
+
+    .status-pill.status-upcoming {
+      background: #e5f0ff;
+      color: #2156a5;
+    }
+
+    .status-pill.status-unavailable {
+      background: #fde9cc;
+      color: #8a5a00;
+    }
+
+    .status-pill.status-longterm {
+      background: #f8d7da;
+      color: #8b1e2d;
+    }
+
+    .status-detail {
+      font-size: 0.95rem;
+      line-height: 1.35;
+      color: #444;
+      min-height: 1.2rem;
+    }
+
+    .status-meta {
+      font-size: 0.82rem;
+      color: #777;
+      min-height: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#cars">Our Cars</a></li>
+        <li><a href="https://turo.com/us/en/drivers/49832972" target="_blank" rel="noopener">See us on Turo</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <div class="logo-container">
+      <img src="images/logo.png" width="400" alt="Fresh Coast Garage logo">
+    </div>
+
+    <section id="cars">
+      <div class="car-cards" id="car-cards">
+        <p>Loading cars&hellip;</p>
+      </div>
+    </section>
+
+    <section id="weather">
+      <h2>Weather This Week in Austin, TX</h2>
+      <div id="weather-forecast" class="weather-cards">
+        <p>Loading forecast&hellip;</p>
+      </div>
+    </section>
+
+    <section id="about">
+      <h2>About Us</h2>
+      <div class="about-content">
+        <img src="images/wet.JPG" alt="Blake in racecar" class="about-photo" />
+
+        <p>Hi, I&rsquo;m Blake. I grew up on the shores of Lake Michigan and have been around cars pretty much since I could walk. I started racing at six &mdash; soapbox derby, then ice racing on Lake Winnebago, and eventually into Spec Miata, Mazda2, and Touring 4 MX-5. I've raced all over: Road America (my home track), Blackhawk Farms, Gingerman, Milwaukee Mile (where I still hold a lap record), Mid-Ohio, COTA, Hallett, Lime Rock, and even up at MOSPORT in Canada.</p>
+
+        <p>I spent ten years running a Miata salvage yard with my dad in a blue-collar town known for Case Tractors and Johnson Wax. I&rsquo;ve prepped and maintained my racecars by hand and I bring that same attention to every car in my rental fleet. Whether you're renting for a trip or just need something solid while your car is in the shop, I make sure each car is ready for the unexpected.</p>
+
+        <p>I moved to Austin about a decade ago. These days, I&rsquo;m raising three kids, sailing when I can, brewing beer in the garage, and chasing my rescue dogs around the yard. I also do woodworking, bike around town, and sneak off to snowboard when the mountains call.</p>
+
+        <p>Fresh Coast Garage is my way of sharing clean, reliable cars with people who want something better than a typical rental &mdash; a bit more personal, a lot more prepared, and run by someone who actually cares about the experience. Welcome to Austin!</p>
+      </div>
+    </section>
+  </main>
+
+    <footer>
+    Made with 🗿 by Fresh Coast Garage, LLC · Buda, Texas ·
+    <a href="/privacy.html">Privacy Policy</a> ·
+    <a href="/smsconsent.html">SMS Terms</a>
+  </footer>
+
+  <script>
+    const fleet = [
+      {
+        turoVehicleId: "3238198",
+        nickname: "Menasha",
+        yearMakeModel: "2015 Toyota Corolla",
+        href: "https://turo.com/us/en/car-rental/united-states/buda-tx/toyota/corolla/3238198",
+        image: "images/stripe.jpg",
+        imageAvif: "images/stripe.avif",
+        alt: "Stripe the 2015 Toyota Corolla"
+      },
+      {
+        turoVehicleId: "3248520",
+        nickname: "Neenah",
+        yearMakeModel: "2015 Toyota Corolla",
+        href: "https://turo.com/us/en/car-rental/united-states/buda-tx/toyota/corolla/3248520",
+        image: "images/cherry.jpg",
+        imageAvif: "images/cherry.avif",
+        alt: "Cherry the 2015 Toyota Corolla"
+      },
+      {
+        turoVehicleId: "3284235",
+        nickname: "Juneau",
+        yearMakeModel: "2017 Hyundai Accent",
+        href: "https://turo.com/us/en/car-rental/united-states/buda-tx/hyundai/accent/3284235",
+        image: "images/juneau.jpg",
+        imageAvif: "images/juneau.avif",
+        alt: "Juneau the 2017 Hyundai Accent"
+      },
+      {
+        turoVehicleId: "3364377",
+        nickname: "Winnie",
+        yearMakeModel: "2016 Honda Fit",
+        href: "https://turo.com/us/en/car-rental/united-states/buda-tx/honda/fit/3364377",
+        image: "images/winnie.jpg",
+        imageAvif: "images/winnie.avif",
+        alt: "Winnie the 2016 Honda Fit"
+      },
+      {
+        turoVehicleId: "3382223",
+        nickname: "Belle",
+        yearMakeModel: "2016 Kia Soul",
+        href: "https://turo.com/us/en/suv-rental/united-states/buda-tx/kia/soul/3382223",
+        image: "images/belle.jpg",
+        imageAvif: "images/belle.avif",
+        alt: "Belle the 2016 Kia Soul"
+      },
+      {
+        turoVehicleId: "3578473",
+        nickname: "Delavan",
+        yearMakeModel: "2016 Hyundai Accent",
+        href: "https://turo.com/us/en/car-rental/united-states/austin-tx/hyundai/accent/3578473",
+        image: "images/delavanUpdated.jpg",
+        imageAvif: null,
+        alt: "Delavan the 2016 Hyundai Accent"
+      },
+      {
+        turoVehicleId: "3666901",
+        nickname: "Geneva",
+        yearMakeModel: "2016 Hyundai Veloster",
+        href: "https://turo.com/us/en/car-rental/united-states/buda-tx/hyundai/veloster/3666901",
+        image: "images/genevaUpdated.jpg",
+        imageAvif: null,
+        alt: "Geneva the 2016 Hyundai Veloster"
+      }
+    ];
+
+    function formatDateLabel(dateString) {
+      if (!dateString) return "";
+      const date = new Date(dateString + "T12:00:00");
+      return date.toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric"
+      });
+    }
+
+    function getTodayKey() {
+      const now = new Date();
+      const parts = new Intl.DateTimeFormat("en-CA", {
+        timeZone: "America/Chicago",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit"
+      }).formatToParts(now);
+
+      const year = parts.find(part => part.type === "year")?.value;
+      const month = parts.find(part => part.type === "month")?.value;
+      const day = parts.find(part => part.type === "day")?.value;
+
+      return `${year}-${month}-${day}`;
+    }
+
+    function inferAvailability(vehicle) {
+      const today = getTodayKey();
+      const availableDates = Array.isArray(vehicle?.availableDates) ? vehicle.availableDates : [];
+      const unavailableDates = Array.isArray(vehicle?.unavailableDates) ? vehicle.unavailableDates : [];
+      const nextAvailableDate = vehicle?.nextAvailableDate || availableDates[0] || null;
+      const isAvailableToday = availableDates.includes(today);
+      const totalOpenDays = availableDates.length;
+
+      if (vehicle?.status === "long_term_trip") {
+        return {
+          pillText: "Unavailable",
+          pillClass: "status-longterm",
+          detail: "Long Term Trip Underway",
+          meta: "This car is temporarily out of circulation."
+        };
+      }
+
+      if (!totalOpenDays) {
+        return {
+          pillText: "Unavailable",
+          pillClass: "status-unavailable",
+          detail: "No availability posted right now",
+          meta: "Check back soon for updated dates."
+        };
+      }
+
+      if (isAvailableToday) {
+        return {
+          pillText: "Available Now",
+          pillClass: "status-available",
+          detail: "Ready to book now",
+          meta: `${totalOpenDays} open day${totalOpenDays === 1 ? "" : "s"} in the next 90 days`
+        };
+      }
+
+      if (nextAvailableDate) {
+        return {
+          pillText: "Booked",
+          pillClass: "status-upcoming",
+          detail: `Next available: ${formatDateLabel(nextAvailableDate)}`,
+          meta: `${unavailableDates.length} blocked day${unavailableDates.length === 1 ? "" : "s"} currently on the calendar`
+        };
+      }
+
+      return {
+        pillText: "Status Unknown",
+        pillClass: "status-unavailable",
+        detail: "Availability not available",
+        meta: ""
+      };
+    }
+
+    function renderCarCard(car, liveVehicle) {
+  const inferred = inferAvailability(liveVehicle);
+
+  const shouldSendToHostPage =
+    inferred.pillClass === "status-longterm" ||
+    inferred.pillClass === "status-unavailable";
+
+  const destination = shouldSendToHostPage
+    ? "https://turo.com/us/en/drivers/49832972"
+    : car.href;
+
+  const pictureHtml = car.imageAvif
+    ? `
+      <picture>
+        <source srcset="${car.imageAvif}" type="image/avif">
+        <img src="${car.image}" alt="${car.alt}" class="car-photo">
+      </picture>
+    `
+    : `
+      <picture>
+        <img src="${car.image}" alt="${car.alt}" class="car-photo">
+      </picture>
+    `;
+
+  return `
+    <a
+      href="${destination}"
+      class="car-card"
+      target="_blank"
+      rel="noopener"
+      data-turo-vehicle-id="${car.turoVehicleId}"
+      data-nickname="${car.nickname}"
+    >
+      <div class="image-wrapper">
+        ${pictureHtml}
+      </div>
+      <h3>${car.nickname}</h3>
+      <p>${car.yearMakeModel}</p>
+      <div class="car-status">
+        <span class="status-pill ${inferred.pillClass}">${inferred.pillText}</span>
+        <div class="status-detail">${inferred.detail}</div>
+        <div class="status-meta">${inferred.meta}</div>
+      </div>
+    </a>
+  `;
+}
+    function normalizeName(value) {
+      return String(value || "").trim().toLowerCase();
+    }
+
+    function buildVehicleMap(vehicles) {
+      const vehicleMap = new Map();
+
+      vehicles.forEach(vehicle => {
+        if (vehicle?.turoVehicleId) {
+          vehicleMap.set(`turo:${vehicle.turoVehicleId}`, vehicle);
+        }
+
+        const nickname = normalizeName(vehicle?.nickname || vehicle?.displayName || vehicle?.name);
+        if (nickname) {
+          vehicleMap.set(`name:${nickname}`, vehicle);
+        }
+      });
+
+      return vehicleMap;
+    }
+
+    function findLiveVehicle(car, vehicleMap) {
+      if (car.turoVehicleId) {
+        const byTuroId = vehicleMap.get(`turo:${car.turoVehicleId}`);
+        if (byTuroId) return byTuroId;
+      }
+
+      return vehicleMap.get(`name:${normalizeName(car.nickname)}`) || null;
+    }
+
+    function renderFleet(vehicles) {
+      const vehicleMap = buildVehicleMap(vehicles);
+
+      const cardsHtml = fleet
+        .map(car => renderCarCard(car, findLiveVehicle(car, vehicleMap)))
+        .join("");
+
+      document.getElementById("car-cards").innerHTML = cardsHtml;
+    }
+
+    function renderFleetOffline() {
+      const cardsHtml = fleet.map(car => {
+        return `
+          <a
+            href="${car.href}"
+            class="car-card"
+            target="_blank"
+            rel="noopener"
+            data-turo-vehicle-id="${car.turoVehicleId}"
+            data-nickname="${car.nickname}"
+          >
+            <div class="image-wrapper">
+              ${
+                car.imageAvif
+                  ? `
+                    <picture>
+                      <source srcset="${car.imageAvif}" type="image/avif">
+                      <img src="${car.image}" alt="${car.alt}" class="car-photo">
+                    </picture>
+                  `
+                  : `
+                    <picture>
+                      <img src="${car.image}" alt="${car.alt}" class="car-photo">
+                    </picture>
+                  `
+              }
+            </div>
+            <h3>${car.nickname}</h3>
+            <p>${car.yearMakeModel}</p>
+            <div class="car-status">
+              <span class="status-pill status-unavailable">Status Offline</span>
+              <div class="status-detail">Availability feed is temporarily unavailable</div>
+              <div class="status-meta"></div>
+            </div>
+          </a>
+        `;
+      }).join("");
+
+      document.getElementById("car-cards").innerHTML = cardsHtml;
+    }
+
+    fetch("/api/availability.php", { cache: "no-store" })
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(`Availability request failed: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then(data => {
+        const vehicles = data?.payload?.vehicles || data?.vehicles || [];
+        renderFleet(vehicles);
+      })
+      .catch(() => {
+        renderFleetOffline();
+      });
+
+    fetch("https://api.open-meteo.com/v1/forecast?latitude=30.0861&longitude=-97.8406&daily=temperature_2m_max,temperature_2m_min,weathercode&temperature_unit=fahrenheit&timezone=auto&model=best_match")
+      .then(res => res.json())
+      .then(data => {
+        const forecast = data.daily;
+        const container = document.getElementById("weather-forecast");
+        container.innerHTML = "";
+
+        const weatherIcons = {
+          0: "\u2600\uFE0F", 1: "\uD83C\uDF24\uFE0F", 2: "\u26C5", 3: "\uD83C\uDF25\uFE0F",
+          45: "\uD83C\uDF2B\uFE0F", 48: "\uD83C\uDF2B\uFE0F", 51: "\uD83C\uDF26\uFE0F", 53: "\uD83C\uDF26\uFE0F",
+          61: "\uD83C\uDF27\uFE0F", 63: "\uD83C\uDF27\uFE0F", 65: "\uD83C\uDF27\uFE0F", 71: "\u2744\uFE0F",
+          80: "\uD83C\uDF26\uFE0F", 95: "\u26C8\uFE0F", 99: "\u26C8\uFE0F"
+        };
+
+        for (let i = 0; i < 5; i++) {
+          const date = new Date(forecast.time[i]);
+          const day = date.toLocaleDateString("en-US", { weekday: "short" });
+          const icon = weatherIcons[forecast.weathercode[i]] || "\u2753";
+          const max = Math.round(forecast.temperature_2m_max[i]);
+          const min = Math.round(forecast.temperature_2m_min[i]);
+
+          const card = document.createElement("div");
+          card.className = "weather-day";
+          card.innerHTML = `
+            <h3>${day}</h3>
+            <div>${icon}</div>
+            <p>${max}&deg;F / ${min}&deg;F</p>
+          `;
+          container.appendChild(card);
+        }
+      })
+      .catch(() => {
+        document.getElementById("weather-forecast").innerHTML = "<p>Weather data unavailable</p>";
+      });
+  </script>
+</body>
+</html>
+
+
+

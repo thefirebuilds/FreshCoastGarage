@@ -1,0 +1,308 @@
+/* Reset & base styling */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to right, #f7f8fa, #e2edf7);
+  color: #333;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 10px;
+}
+
+main {
+  flex: 1;
+  margin-top: 80px;
+  text-align: center;
+}
+
+/* Header & Nav */
+header {
+  width: 100%;
+  padding: 1rem;
+  background-color: #ffffffcc;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: #1a1a1a;
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+nav a {
+  text-decoration: none;
+  color: #0077b6;
+  font-weight: bold;
+  transition: color 0.2s ease;
+}
+
+nav a:hover {
+  color: #005f8e;
+}
+
+/* Main content */
+p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.cta-button {
+  display: block;
+  width: fit-content;
+  margin: 1rem auto 2rem auto;
+  margin-top: 11rem;
+  padding: 10.75rem 1.5rem;
+  background-color: #0077cc;
+  color: white;
+  font-size: 1.1rem;
+  text-decoration: none;
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  z-index: 1;
+  position: relative;
+}
+
+.cta-button:hover {
+  background-color: #005f8e;
+}
+
+/* Footer */
+footer {
+  margin-top: auto;
+  padding: 1rem 0;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* Car gallery */
+.car-gallery {
+  margin-top: 4rem;
+}
+
+.car-gallery h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #222;
+}
+
+.car-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 0; /* This prevents pushing down from above */
+  position: relative;
+  z-index: 0;
+}
+
+.car-card {
+  display: block;
+  background: #fff;
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  text-align: left;
+  width: 90%;
+  max-width: 400px;
+  text-decoration: none;
+  color: #333;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.car-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+}
+
+.car-card h3 {
+  margin-bottom: 0.25rem;
+  font-size: 1.4rem;
+  color: #0077b6;
+}
+
+.car-card p {
+  font-size: 1rem;
+  color: #666;
+}
+
+/* About section */
+#about {
+  padding: 2rem;
+  background-color: #f7f7f7;
+  border-top: 2px solid #ccc;
+}
+
+#about h2 {
+  font-size: 2em;
+  margin-bottom: 1rem;
+}
+
+.about-content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.about-content p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.about-photo {
+  width: 100%;
+  max-width: 500px;
+  float: right;
+  margin-left: 2rem;
+  margin-bottom: 1rem;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+.car-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 6px;
+}
+.image-wrapper {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 16px;
+  margin-bottom: 0.5rem;
+}
+.car-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 4rem; /* creates space before About section */
+}
+
+.car-card {
+  display: block;
+  background: #fff;
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  text-align: left;
+  width: 100%;
+  max-width: 360px;
+  text-decoration: none;
+  color: #333;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+@media (min-width: 600px) {
+  .car-card {
+    width: 45%;
+  }
+}
+#weather {
+  margin: 2rem auto;
+  padding: 1rem;
+  background-color: #eef6fb;
+  border-radius: 8px;
+  max-width: 700px;
+  text-align: center;
+}
+
+#weather h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.weather-cards {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.weather-day {
+  background-color: #fff;
+  padding: 0.75rem;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  width: 100px;
+}
+
+.weather-day h3 {
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.weather-day img {
+  width: 40px;
+  height: 40px;
+}
+
+.weather-day p {
+  font-size: 0.9rem;
+  margin: 0.25rem 0;
+}
+
+/* give your hero logo a little breathing room */
+.logo-container {
+  margin-bottom: 1rem;
+  /* optional: max-width: 100%; text-align:center; */
+}
+
+/* give the CTA a bit of extra breathing room too */
+.cta-button {
+  margin-top: 11.5rem;     /* you can tweak this as well */
+}
+
+/* --- Responsive layout fixes for car cards --- */
+
+/* On small screens, stack cards vertically */
+@media (max-width: 599px) {
+  .car-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .car-card {
+    width: 90%;
+    max-width: 500px;
+  }
+}
+
+/* On tablets and up, go to two-column layout */
+@media (min-width: 600px) and (max-width: 1023px) {
+  .car-card {
+    width: 45%;
+  }
+}
+
+/* On desktop, allow up to 3 in a row if screen allows */
+@media (min-width: 1024px) {
+  .car-cards {
+    justify-content: center;
+  }
+
+  .car-card {
+    width: 30%;
+    max-width: 360px;
+  }
+}
