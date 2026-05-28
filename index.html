@@ -274,6 +274,17 @@
         };
       }
 
+      if (vehicle?.status === "available_until_next_booking" && vehicle?.nextBookedStart) {
+        return {
+          pillText: "Available Now",
+          pillClass: "status-available",
+          detail: `Available until ${formatDateLabel(vehicle.nextBookedStart)}`,
+          meta: vehicle.nextAvailableDate
+            ? `Then available again ${formatDateLabel(vehicle.nextAvailableDate)}`
+            : `${totalOpenDays} open day${totalOpenDays === 1 ? "" : "s"} in the next 90 days`
+        };
+      }
+
       if (isAvailableToday) {
         return {
           pillText: "Available Now",
@@ -374,10 +385,10 @@
           (imageFolder ? `${imageFolder}/cover.webp` : null)
         ),
         image: normalizeImagePath(
-          liveVehicle?.imageUrl ??
           liveVehicle?.primaryImageUrl ??
           liveVehicle?.heroImageUrl ??
           (imageFolder ? `${imageFolder}/cover.jpg` : null) ??
+          liveVehicle?.imageUrl ??
           car.image
         ),
         fallbackImage: normalizeImagePath(fallbackImage),
@@ -579,4 +590,3 @@
   </script>
 </body>
 </html>
-

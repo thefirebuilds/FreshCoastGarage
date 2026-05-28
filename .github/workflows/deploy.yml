@@ -30,6 +30,8 @@ jobs:
           mirror --reverse --verbose --delete \
             --exclude-glob .git/ \
             --exclude-glob .github/ \
+            --exclude-glob api/data/ \
+            --exclude-glob images/*/ \
             --exclude .gitignore \
             ./ /freshcoastgarage/
           EOF

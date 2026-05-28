@@ -31,6 +31,70 @@ function fail(int $status, string $message): void {
     exit;
 }
 
+function slugifyVehicleFolder(string $value): string {
+    $slug = strtolower(trim($value));
+    $slug = preg_replace('/[^a-z0-9]+/', '-', $slug) ?? '';
+    $slug = trim($slug, '-');
+
+    return $slug !== '' ? $slug : 'vehicle';
+}
+
+function getVehicleFolderSlug(array $vehicle, int $index): string {
+    $name =
+        $vehicle['nickname'] ??
+        $vehicle['displayName'] ??
+        $vehicle['name'] ??
+        $vehicle['vehicleId'] ??
+        'vehicle-' . ($index + 1);
+
+    $slug = slugifyVehicleFolder((string) $name);
+
+    if ($slug === 'vehicle' && !empty($vehicle['vehicleId'])) {
+        return 'vehicle-' . slugifyVehicleFolder((string) $vehicle['vehicleId']);
+    }
+
+    return $slug;
+}
+
+function prepareVehicleImageFolders(array $vehicles, string $imagesDir): array {
+    if (!is_dir($imagesDir) && !mkdir($imagesDir, 0755, true) && !is_dir($imagesDir)) {
+        fail(500, 'Failed to create images directory');
+    }
+
+    $usedSlugs = [];
+
+    foreach ($vehicles as $index => $vehicle) {
+        if (!is_array($vehicle)) {
+            continue;
+        }
+
+        $baseSlug = getVehicleFolderSlug($vehicle, $index);
+        $slug = $baseSlug;
+        $suffix = 2;
+
+        while (isset($usedSlugs[$slug])) {
+            $slug = $baseSlug . '-' . $suffix;
+            $suffix++;
+        }
+
+        $usedSlugs[$slug] = true;
+        $vehicleDir = $imagesDir . '/' . $slug;
+
+        if (!is_dir($vehicleDir) && !mkdir($vehicleDir, 0755, true) && !is_dir($vehicleDir)) {
+            fail(500, 'Failed to create vehicle image directory');
+        }
+
+        $gitkeepFile = $vehicleDir . '/.gitkeep';
+        if (!is_file($gitkeepFile) && file_put_contents($gitkeepFile, '') === false) {
+            fail(500, 'Failed to create vehicle image placeholder');
+        }
+
+        $vehicles[$index]['imageFolder'] = 'images/' . $slug;
+    }
+
+    return $vehicles;
+}
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     fail(405, 'Method not allowed');
 }
@@ -89,6 +153,8 @@ if (!is_array($data)) {
 if (!isset($data['vehicles']) || !is_array($data['vehicles'])) {
     fail(400, 'Missing vehicles array');
 }
+
+$data['vehicles'] = prepareVehicleImageFolders($data['vehicles'], dirname(__DIR__) . '/images');
 
 $storageDir = __DIR__ . '/data';
 if (!is_dir($storageDir) && !mkdir($storageDir, 0755, true) && !is_dir($storageDir)) {
