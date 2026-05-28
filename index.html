@@ -73,6 +73,36 @@
       color: #777;
       min-height: 1rem;
     }
+
+    .daily-rate {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-top: 0.85rem;
+      padding-top: 0.85rem;
+      border-top: 1px solid #e8edf2;
+    }
+
+    .daily-rate-label {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #607080;
+      text-transform: uppercase;
+    }
+
+    .daily-rate-value {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #1f6b35;
+      white-space: nowrap;
+    }
+
+    .daily-rate-value span {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #607080;
+    }
   </style>
 </head>
 <body>
@@ -270,8 +300,118 @@
       };
     }
 
+    function getExpectedDailyRate(vehicle) {
+      if (!vehicle) return null;
+
+      const rawRate =
+        vehicle.expectedDailyRate ??
+        vehicle.expectedDailyRateUsd ??
+        vehicle.dailyRate ??
+        vehicle.dailyRateUsd ??
+        vehicle.averageDailyRate ??
+        vehicle.expectedDailyPrice;
+
+      if (rawRate !== undefined && rawRate !== null && rawRate !== "") {
+        const numericRate = Number(String(rawRate).replace(/[^0-9.-]/g, ""));
+        return Number.isFinite(numericRate) ? numericRate : null;
+      }
+
+      const rawCents =
+        vehicle.expectedDailyRateCents ??
+        vehicle.dailyRateCents ??
+        vehicle.expectedDailyPriceCents;
+
+      if (rawCents !== undefined && rawCents !== null && rawCents !== "") {
+        const numericCents = Number(rawCents);
+        return Number.isFinite(numericCents) ? numericCents / 100 : null;
+      }
+
+      return null;
+    }
+
+    function formatDailyRate(value) {
+      return new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+        maximumFractionDigits: value % 1 === 0 ? 0 : 2
+      }).format(value);
+    }
+
+    function normalizeImagePath(value) {
+      if (!value) return null;
+
+      const imagePath = String(value).trim();
+      if (!imagePath) return null;
+      if (/^https?:\/\//i.test(imagePath) || imagePath.startsWith("/")) return imagePath;
+
+      return imagePath.replace(/^\.?\//, "");
+    }
+
+    function getImageFolder(vehicle) {
+      const folder =
+        vehicle?.imageFolder ??
+        vehicle?.imageDirectory ??
+        vehicle?.imagePath;
+
+      const normalizedFolder = normalizeImagePath(folder);
+      return normalizedFolder ? normalizedFolder.replace(/\/$/, "") : null;
+    }
+
+    function getVehicleImageAssets(car, liveVehicle) {
+      const imageFolder = getImageFolder(liveVehicle);
+      const fallbackImage = car.imageAvif || car.image;
+
+      return {
+        avif: normalizeImagePath(
+          liveVehicle?.imageAvif ??
+          liveVehicle?.imageAvifUrl ??
+          (imageFolder ? `${imageFolder}/cover.avif` : null) ??
+          car.imageAvif
+        ),
+        webp: normalizeImagePath(
+          liveVehicle?.imageWebp ??
+          liveVehicle?.imageWebpUrl ??
+          (imageFolder ? `${imageFolder}/cover.webp` : null)
+        ),
+        image: normalizeImagePath(
+          liveVehicle?.imageUrl ??
+          liveVehicle?.primaryImageUrl ??
+          liveVehicle?.heroImageUrl ??
+          (imageFolder ? `${imageFolder}/cover.jpg` : null) ??
+          car.image
+        ),
+        fallbackImage: normalizeImagePath(fallbackImage),
+        alt: liveVehicle?.imageAlt || car.alt
+      };
+    }
+
+    function renderVehiclePicture(car, liveVehicle) {
+      const imageAssets = getVehicleImageAssets(car, liveVehicle);
+      const fallback = imageAssets.fallbackImage || imageAssets.image;
+      const fallbackAttribute = fallback
+        ? ` onerror="this.onerror=null;this.src='${fallback}'"`
+        : "";
+
+      return `
+        <picture>
+          ${imageAssets.avif ? `<source srcset="${imageAssets.avif}" type="image/avif">` : ""}
+          ${imageAssets.webp ? `<source srcset="${imageAssets.webp}" type="image/webp">` : ""}
+          <img src="${imageAssets.image}" alt="${imageAssets.alt}" class="car-photo"${fallbackAttribute}>
+        </picture>
+      `;
+    }
+
     function renderCarCard(car, liveVehicle) {
   const inferred = inferAvailability(liveVehicle);
+  const expectedDailyRate = getExpectedDailyRate(liveVehicle);
+  const dailyRateHtml = expectedDailyRate === null
+    ? ""
+    : `
+      <div class="daily-rate">
+        <span class="daily-rate-label">Expected daily rate</span>
+        <strong class="daily-rate-value">${formatDailyRate(expectedDailyRate)}<span>/day</span></strong>
+      </div>
+    `;
 
   const shouldSendToHostPage =
     inferred.pillClass === "status-longterm" ||
@@ -281,18 +421,7 @@
     ? "https://turo.com/us/en/drivers/49832972"
     : car.href;
 
-  const pictureHtml = car.imageAvif
-    ? `
-      <picture>
-        <source srcset="${car.imageAvif}" type="image/avif">
-        <img src="${car.image}" alt="${car.alt}" class="car-photo">
-      </picture>
-    `
-    : `
-      <picture>
-        <img src="${car.image}" alt="${car.alt}" class="car-photo">
-      </picture>
-    `;
+  const pictureHtml = renderVehiclePicture(car, liveVehicle);
 
   return `
     <a
@@ -308,6 +437,7 @@
       </div>
       <h3>${car.nickname}</h3>
       <p>${car.yearMakeModel}</p>
+      ${dailyRateHtml}
       <div class="car-status">
         <span class="status-pill ${inferred.pillClass}">${inferred.pillText}</span>
         <div class="status-detail">${inferred.detail}</div>
@@ -449,6 +579,4 @@
   </script>
 </body>
 </html>
-
-
 
