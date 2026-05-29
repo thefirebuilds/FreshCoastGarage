@@ -409,14 +409,14 @@
       const fallbackImage = car.imageAvif || car.image;
 
       const candidates = [
+        imageFolder ? `${imageFolder}/${imageSlug}.avif` : null,
+        imageFolder ? `${imageFolder}/${imageSlug}.webp` : null,
+        imageFolder ? `${imageFolder}/${imageSlug}.jpg` : null,
+        imageFolder ? `${imageFolder}/${imageSlug}.png` : null,
         liveVehicle?.imageAvif,
         liveVehicle?.imageAvifUrl,
         liveVehicle?.primaryImageUrl,
         liveVehicle?.heroImageUrl,
-        imageFolder ? `${imageFolder}/${imageSlug}.avif` : null,
-        imageFolder ? `${imageFolder}/${imageSlug}.jpg` : null,
-        imageFolder ? `${imageFolder}/${imageSlug}.png` : null,
-        imageFolder ? `${imageFolder}/${imageSlug}.webp` : null,
         liveVehicle?.imageUrl,
         car.imageAvif,
         car.image,

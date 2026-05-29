@@ -83,6 +83,7 @@ function enrichVehicleImageFromFolder(array $vehicle): array {
         'png' => 'imageUrl',
     ];
     $foundPrimaryImage = false;
+    $primaryImagePath = null;
 
     foreach ($extensionMap as $extension => $field) {
         $relativePath = $imageFolder . '/' . $slug . '.' . $extension;
@@ -91,15 +92,20 @@ function enrichVehicleImageFromFolder(array $vehicle): array {
         if (is_file($absolutePath)) {
             $vehicle[$field] = '/' . $relativePath;
 
-            if (empty($vehicle['primaryImageUrl'])) {
-                $vehicle['primaryImageUrl'] = '/' . $relativePath;
+            if ($primaryImagePath === null) {
+                $primaryImagePath = '/' . $relativePath;
             }
 
             $foundPrimaryImage = true;
         }
     }
 
-    if ($foundPrimaryImage || !is_dir($folderPath)) {
+    if ($foundPrimaryImage) {
+        $vehicle['primaryImageUrl'] = $primaryImagePath;
+        return $vehicle;
+    }
+
+    if (!is_dir($folderPath)) {
         return $vehicle;
     }
 
@@ -116,9 +122,13 @@ function enrichVehicleImageFromFolder(array $vehicle): array {
         $relativePath = $imageFolder . '/' . basename($matches[0]);
         $vehicle[$field] = '/' . $relativePath;
 
-        if (empty($vehicle['primaryImageUrl'])) {
-            $vehicle['primaryImageUrl'] = '/' . $relativePath;
+        if ($primaryImagePath === null) {
+            $primaryImagePath = '/' . $relativePath;
         }
+    }
+
+    if ($primaryImagePath !== null) {
+        $vehicle['primaryImageUrl'] = $primaryImagePath;
     }
 
     return $vehicle;
