@@ -82,6 +82,7 @@ function enrichVehicleImageFromFolder(array $vehicle): array {
         'jpeg' => 'imageUrl',
         'png' => 'imageUrl',
     ];
+    $foundPrimaryImage = false;
 
     foreach ($extensionMap as $extension => $field) {
         $relativePath = $imageFolder . '/' . $slug . '.' . $extension;
@@ -93,6 +94,30 @@ function enrichVehicleImageFromFolder(array $vehicle): array {
             if (empty($vehicle['primaryImageUrl'])) {
                 $vehicle['primaryImageUrl'] = '/' . $relativePath;
             }
+
+            $foundPrimaryImage = true;
+        }
+    }
+
+    if ($foundPrimaryImage || !is_dir($folderPath)) {
+        return $vehicle;
+    }
+
+    foreach ($extensionMap as $extension => $field) {
+        $matches = glob($folderPath . '/*.' . $extension);
+        if (!is_array($matches) || count($matches) === 0) {
+            continue;
+        }
+
+        usort($matches, static function (string $left, string $right): int {
+            return strcasecmp(basename($left), basename($right));
+        });
+
+        $relativePath = $imageFolder . '/' . basename($matches[0]);
+        $vehicle[$field] = '/' . $relativePath;
+
+        if (empty($vehicle['primaryImageUrl'])) {
+            $vehicle['primaryImageUrl'] = '/' . $relativePath;
         }
     }
 
