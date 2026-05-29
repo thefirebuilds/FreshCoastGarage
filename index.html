@@ -384,45 +384,81 @@
       return normalizedFolder ? normalizedFolder.replace(/\/$/, "") : null;
     }
 
+    function slugifyAssetName(value) {
+      return String(value || "")
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "") || "vehicle";
+    }
+
+    function getVehicleImageSlug(car, liveVehicle) {
+      const folderSlug = getImageFolder(liveVehicle)?.split("/").pop();
+      return slugifyAssetName(
+        liveVehicle?.imageSlug ??
+        liveVehicle?.nickname ??
+        liveVehicle?.displayName ??
+        car.nickname ??
+        folderSlug
+      );
+    }
+
     function getVehicleImageAssets(car, liveVehicle) {
       const imageFolder = getImageFolder(liveVehicle);
+      const imageSlug = getVehicleImageSlug(car, liveVehicle);
       const fallbackImage = car.imageAvif || car.image;
 
+      const candidates = [
+        liveVehicle?.imageAvif,
+        liveVehicle?.imageAvifUrl,
+        liveVehicle?.primaryImageUrl,
+        liveVehicle?.heroImageUrl,
+        imageFolder ? `${imageFolder}/${imageSlug}.avif` : null,
+        imageFolder ? `${imageFolder}/${imageSlug}.jpg` : null,
+        imageFolder ? `${imageFolder}/${imageSlug}.png` : null,
+        imageFolder ? `${imageFolder}/${imageSlug}.webp` : null,
+        liveVehicle?.imageUrl,
+        car.imageAvif,
+        car.image,
+        fallbackImage
+      ]
+        .map(normalizeImagePath)
+        .filter(Boolean);
+
       return {
-        avif: normalizeImagePath(
-          liveVehicle?.imageAvif ??
-          liveVehicle?.imageAvifUrl ??
-          car.imageAvif
-        ),
-        webp: normalizeImagePath(
-          liveVehicle?.imageWebp ??
-          liveVehicle?.imageWebpUrl
-        ),
-        image: normalizeImagePath(
-          liveVehicle?.primaryImageUrl ??
-          liveVehicle?.heroImageUrl ??
-          (imageFolder ? `${imageFolder}/cover.jpg` : null) ??
-          liveVehicle?.imageUrl ??
-          car.image
-        ),
-        fallbackImage: normalizeImagePath(fallbackImage),
+        candidates: [...new Set(candidates)],
         alt: liveVehicle?.imageAlt || car.alt
       };
     }
 
+    function handleImageFallback(image) {
+      const fallbacks = image.dataset.fallbacks.split("|").filter(Boolean);
+      const nextImage = fallbacks.shift();
+
+      image.dataset.fallbacks = fallbacks.join("|");
+
+      if (nextImage) {
+        image.src = nextImage;
+      } else {
+        image.onerror = null;
+      }
+    }
+
     function renderVehiclePicture(car, liveVehicle) {
       const imageAssets = getVehicleImageAssets(car, liveVehicle);
-      const fallback = imageAssets.fallbackImage || imageAssets.image;
-      const fallbackAttribute = fallback
-        ? ` onerror="this.onerror=null;this.src='${fallback}'"`
+      const [primaryImage, ...fallbackImages] = imageAssets.candidates;
+      const fallbackAttribute = fallbackImages.length
+        ? ` onerror="handleImageFallback(this)"`
         : "";
 
       return `
-        <picture>
-          ${imageAssets.avif ? `<source srcset="${imageAssets.avif}" type="image/avif">` : ""}
-          ${imageAssets.webp ? `<source srcset="${imageAssets.webp}" type="image/webp">` : ""}
-          <img src="${imageAssets.image}" alt="${imageAssets.alt}" class="car-photo"${fallbackAttribute}>
-        </picture>
+        <img
+          src="${primaryImage}"
+          alt="${imageAssets.alt}"
+          class="car-photo"
+          data-fallbacks="${fallbackImages.join("|")}"
+          ${fallbackAttribute}
+        >
       `;
     }
 

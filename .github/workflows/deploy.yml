@@ -32,7 +32,10 @@ jobs:
             --exclude-glob .github/ \
             --exclude-glob api/api_config.php \
             --exclude-glob api/data/ \
-            --exclude-glob images/*/ \
+            --exclude-glob images/ \
             --exclude .gitignore \
             ./ /freshcoastgarage/
+          mirror --reverse --verbose \
+            --exclude-glob .gitkeep \
+            ./images/ /freshcoastgarage/images/
           EOF
