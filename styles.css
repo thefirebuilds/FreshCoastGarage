@@ -339,16 +339,31 @@ a:focus-visible, summary:focus-visible {
 .pickup-actions a { display: inline-flex; flex-wrap: wrap; gap: 0.3rem 0.5rem; align-items: center; justify-content: center; min-height: 44px; font-weight: 600; padding: 0.65rem 0.9rem; border: 1px solid #c9dce8; border-radius: 10px; text-decoration: none; }
 .pickup-actions a:hover { background: #eef6fb; }
 .guest-section .pickup-footnote { font-size: 0.9rem; line-height: 1.6; margin: 1.25rem auto 0; color: #555; max-width: 900px; }
-.faq-list { max-width: 900px; margin: 0 auto; display: grid; gap: 0.75rem; }
+.faq-inset {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: clamp(1.25rem, 4vw, 3rem);
+  background: #f8fbfd;
+  border: 1px solid #d5e2eb;
+  border-radius: 24px;
+  box-shadow: inset 0 2px 8px rgba(36,65,93,0.04), 0 12px 32px rgba(36,65,93,0.07);
+  text-align: left;
+}
+.faq-inset .section-intro { margin-left: 0; color: #526373; font-size: 1rem; }
+.faq-list { margin: 0 auto; display: grid; gap: 0; border: 1px solid #dbe6ee; border-radius: 14px; background: #fff; }
+.faq-list details { background: transparent; border-radius: 0; box-shadow: none; }
+.faq-list details + details { border-top: 1px solid #e6edf2; }
 .faq-topics { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.6rem; margin: 0 auto 2rem; max-width: 900px; }
 .faq-topics a { display: inline-flex; align-items: center; min-height: 44px; padding: 0.6rem 1rem; border-radius: 999px; background: #fff; border: 1px solid #c9dce8; font-size: 0.9rem; text-decoration: none; }
 .faq-topics a:hover { background: #eef6fb; }
+.faq-inset .faq-topics { justify-content: flex-start; padding-bottom: 1.5rem; border-bottom: 1px solid #dbe6ee; }
 .faq-group { max-width: 900px; margin: 0 auto 2rem; }
+.faq-group:last-child { margin-bottom: 0; }
 .faq-group h3 { text-align: left; color: #24415d; font-size: 1.15rem; margin: 0 0 0.85rem; }
-.faq-list summary { padding: 1rem 1.25rem; cursor: pointer; font-weight: 600; line-height: 1.5; color: #005f8e; }
+.faq-list summary { padding: 1rem 1.25rem; cursor: pointer; font-weight: 600; line-height: 1.5; color: #24415d; }
 .faq-list summary:hover { background: #eef6fb; border-radius: 10px; }
 .faq-list details[open] summary { border-bottom: 1px solid #e2edf7; }
-.faq-list p { padding: 1rem 1.25rem; margin: 0; }
+.faq-list p { padding: 1rem 1.25rem; margin: 0; color: #465b6b; font-size: 0.95rem; max-width: 75ch; }
 @media (min-width: 1024px) {
   .pickup-options { grid-template-columns: 1fr 1fr; }
 }
