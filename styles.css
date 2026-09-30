@@ -24,6 +24,7 @@ main {
 
 /* Header & Nav */
 header {
+  z-index: 10;
   width: 100%;
   padding: 1rem;
   background-color: #ffffffcc;
@@ -41,6 +42,7 @@ h1 {
 }
 
 nav ul {
+  flex-wrap: wrap;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -266,6 +268,75 @@ footer {
 .logo-container {
   margin-bottom: 1rem;
   /* optional: max-width: 100%; text-align:center; */
+}
+
+/* Guest guide: shared colors and card treatment with the fleet. */
+main { width: 100%; }
+.logo-container img { max-width: 100%; height: auto; }
+section[id] { scroll-margin-top: 8rem; }
+a:focus-visible, summary:focus-visible {
+  outline: 3px solid #005f8e;
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+.guest-section {
+  max-width: 1120px;
+  margin: 0 auto 3rem;
+  padding: 0 1rem;
+}
+.guest-section h2 { font-size: 2rem; margin-bottom: 0.75rem; }
+.guest-section .section-intro {
+  max-width: 750px;
+  margin: 0 auto 1.5rem;
+  line-height: 1.6;
+}
+.pickup-options { display: grid; gap: 1.5rem; align-items: start; }
+.pickup-panel, .faq-list details {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  text-align: left;
+  min-width: 0;
+}
+.pickup-panel { padding: 1.5rem; border-top: 4px solid #0077b6; }
+.airport-panel { border-top-color: #24415d; }
+.pickup-tag {
+  display: inline-block;
+  background: #eef6fb;
+  color: #24415d;
+  border-radius: 999px;
+  padding: 0.35rem 0.7rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+.pickup-panel h3 { color: #0077b6; font-size: 1.5rem; margin-bottom: 0.5rem; }
+.pickup-panel h4 { font-size: 1.1rem; margin: 1.25rem 0 0.5rem; }
+.pickup-panel p, .faq-list p { font-size: 1rem; line-height: 1.65; margin: 0 0 1rem; }
+.pickup-location { font-weight: 600; color: #24415d; }
+.pickup-steps { padding-left: 1.5rem; line-height: 1.65; }
+.pickup-steps li { padding-left: 0.25rem; margin-bottom: 0.8rem; }
+.pickup-steps li::marker { color: #005f8e; font-weight: 700; }
+.pickup-note { background: #eef6fb; border-radius: 6px; padding: 1rem; line-height: 1.6; margin-top: 1rem; }
+.pickup-actions { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; margin-top: 1rem; }
+.guest-section a { color: #005f8e; text-underline-offset: 3px; }
+.pickup-actions a { display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; }
+.guest-section .pickup-footnote { font-size: 0.9rem; line-height: 1.6; margin: 1.25rem auto 0; color: #555; max-width: 900px; }
+.faq-list { max-width: 900px; margin: 0 auto; display: grid; gap: 0.75rem; }
+.faq-list summary { padding: 1rem 1.25rem; cursor: pointer; font-weight: 600; line-height: 1.5; color: #005f8e; }
+.faq-list summary:hover { background: #eef6fb; border-radius: 10px; }
+.faq-list details[open] summary { border-bottom: 1px solid #e2edf7; }
+.faq-list p { padding: 1rem 1.25rem; margin: 0; }
+@media (min-width: 1024px) {
+  .pickup-options { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 599px) {
+  header { padding: 0.5rem 0.75rem; }
+  nav ul { gap: 0.25rem 1rem; margin-top: 0; }
+  nav a { display: inline-flex; align-items: center; min-height: 44px; }
+  main { margin-top: 110px; }
+  .guest-section h2 { font-size: 1.6rem; }
+  .pickup-panel { padding: 1.25rem; }
 }
 
 /* give the CTA a bit of extra breathing room too */
