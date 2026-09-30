@@ -157,7 +157,8 @@
   </footer>
 
   <script>
-    const fleet = [
+    // Used for missing feed metadata and when the feed is offline.
+    const fallbackFleet = [
       {
         turoVehicleId: "3238198",
         nickname: "Menasha",
@@ -220,6 +221,15 @@
         image: "images/geneva/geneva.jpg",
         imageAvif: null,
         alt: "Geneva the 2016 Hyundai Veloster"
+      },
+      {
+        turoVehicleId: "3913214",
+        nickname: "Verona",
+        yearMakeModel: "2014 Hyundai Tucson",
+        href: "https://turo.com/us/en/suv-rental/united-states/buda-tx/hyundai/tucson/3913214",
+        image: "images/logo.png",
+        imageAvif: null,
+        alt: "Fresh Coast Garage logo — photo of Verona coming soon"
       }
     ];
 
@@ -420,7 +430,8 @@
         liveVehicle?.imageUrl,
         car.imageAvif,
         car.image,
-        fallbackImage
+        fallbackImage,
+        "images/logo.png"
       ]
         .map(normalizeImagePath)
         .filter(Boolean);
@@ -453,10 +464,10 @@
 
       return `
         <img
-          src="${primaryImage}"
-          alt="${imageAssets.alt}"
+          src="${escapeHtml(primaryImage)}"
+          alt="${escapeHtml(imageAssets.alt)}"
           class="car-photo"
-          data-fallbacks="${fallbackImages.join("|")}"
+          data-fallbacks="${escapeHtml(fallbackImages.join("|"))}"
           ${fallbackAttribute}
         >
       `;
@@ -467,7 +478,7 @@
   const expectedDailyRate = getExpectedDailyRate(liveVehicle);
   const dailyRateValue = typeof expectedDailyRate === "number"
     ? `${formatDailyRate(expectedDailyRate)}<span>/day</span>`
-    : expectedDailyRate;
+    : escapeHtml(expectedDailyRate);
   const dailyRateHtml = expectedDailyRate === null
     ? ""
     : `
@@ -489,18 +500,18 @@
 
   return `
     <a
-      href="${destination}"
+      href="${escapeHtml(destination)}"
       class="car-card"
       target="_blank"
       rel="noopener"
-      data-turo-vehicle-id="${car.turoVehicleId}"
-      data-nickname="${car.nickname}"
+      data-turo-vehicle-id="${escapeHtml(car.turoVehicleId)}"
+      data-nickname="${escapeHtml(car.nickname)}"
     >
       <div class="image-wrapper">
         ${pictureHtml}
       </div>
-      <h3>${car.nickname}</h3>
-      <p>${car.yearMakeModel}</p>
+      <h3>${escapeHtml(car.nickname)}</h3>
+      <p>${escapeHtml(car.yearMakeModel)}</p>
       ${dailyRateHtml}
       <div class="car-status">
         <span class="status-pill ${inferred.pillClass}">${inferred.pillText}</span>
@@ -514,30 +525,39 @@
       return String(value || "").trim().toLowerCase();
     }
 
-    function buildVehicleMap(vehicles) {
-      const vehicleMap = new Map();
-
-      vehicles.forEach(vehicle => {
-        if (vehicle?.turoVehicleId) {
-          vehicleMap.set(`turo:${vehicle.turoVehicleId}`, vehicle);
-        }
-
-        const nickname = normalizeName(vehicle?.nickname || vehicle?.displayName || vehicle?.name);
-        if (nickname) {
-          vehicleMap.set(`name:${nickname}`, vehicle);
-        }
-      });
-
-      return vehicleMap;
+    function escapeHtml(value) {
+      return String(value ?? "").replace(/[&<>"']/g, character => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      })[character]);
     }
 
-    function findLiveVehicle(car, vehicleMap) {
-      if (car.turoVehicleId) {
-        const byTuroId = vehicleMap.get(`turo:${car.turoVehicleId}`);
-        if (byTuroId) return byTuroId;
+    function getListingUrl(value) {
+      try {
+        const url = new URL(value);
+        return url.protocol === "https:" && url.hostname === "turo.com" ? url.href : null;
+      } catch {
+        return null;
       }
+    }
 
-      return vehicleMap.get(`name:${normalizeName(car.nickname)}`) || null;
+    function normalizeVehicle(vehicle) {
+      const fallback = fallbackFleet.find(car =>
+        vehicle.turoVehicleId && String(car.turoVehicleId) === String(vehicle.turoVehicleId)
+      ) || fallbackFleet.find(car =>
+        normalizeName(car.nickname) === normalizeName(vehicle.nickname || vehicle.displayName || vehicle.name)
+      ) || {};
+      const nickname = vehicle.nickname || vehicle.displayName || vehicle.name || fallback.nickname || "Rental car";
+      return {
+        turoVehicleId: vehicle.turoVehicleId || fallback.turoVehicleId || "",
+        nickname,
+        yearMakeModel: vehicle.yearMakeModel ||
+          [vehicle.year, vehicle.make, vehicle.model].filter(Boolean).join(" ") || fallback.yearMakeModel || "",
+        href: getListingUrl(vehicle.turoUrl) || getListingUrl(vehicle.href) ||
+          fallback.href || "https://turo.com/us/en/drivers/49832972",
+        image: fallback.image || "images/logo.png",
+        imageAvif: fallback.imageAvif || null,
+        alt: vehicle.imageAlt || fallback.alt || nickname + " rental car"
+      };
     }
 
     function getAvailabilityRank(vehicle) {
@@ -551,11 +571,9 @@
     }
 
     function renderFleet(vehicles) {
-      const vehicleMap = buildVehicleMap(vehicles);
-
-      const cardsHtml = fleet
-        .map((car, originalIndex) => {
-          const liveVehicle = findLiveVehicle(car, vehicleMap);
+      const cardsHtml = vehicles
+        .map((liveVehicle, originalIndex) => {
+          const car = normalizeVehicle(liveVehicle);
           return {
             car,
             liveVehicle,
@@ -577,15 +595,15 @@
     }
 
     function renderFleetOffline() {
-      const cardsHtml = fleet.map(car => {
+      const cardsHtml = fallbackFleet.map(car => {
         return `
           <a
             href="${car.href}"
             class="car-card"
             target="_blank"
             rel="noopener"
-            data-turo-vehicle-id="${car.turoVehicleId}"
-            data-nickname="${car.nickname}"
+            data-turo-vehicle-id="${escapeHtml(car.turoVehicleId)}"
+            data-nickname="${escapeHtml(car.nickname)}"
           >
             <div class="image-wrapper">
               ${
@@ -603,8 +621,8 @@
                   `
               }
             </div>
-            <h3>${car.nickname}</h3>
-            <p>${car.yearMakeModel}</p>
+            <h3>${escapeHtml(car.nickname)}</h3>
+            <p>${escapeHtml(car.yearMakeModel)}</p>
             <div class="car-status">
               <span class="status-pill status-unavailable">Status Offline</span>
               <div class="status-detail">Availability feed is temporarily unavailable</div>
@@ -625,7 +643,10 @@
         return res.json();
       })
       .then(data => {
-        const vehicles = data?.payload?.vehicles || data?.vehicles || [];
+        const vehicles = data?.payload?.vehicles ?? data?.vehicles;
+        if (data?.ok === false || !Array.isArray(vehicles) || vehicles.some(vehicle => !vehicle || typeof vehicle !== "object" || Array.isArray(vehicle))) {
+          throw new Error("Invalid vehicle feed");
+        }
         renderFleet(vehicles);
       })
       .catch(() => {
