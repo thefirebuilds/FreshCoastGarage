@@ -284,7 +284,9 @@ a:focus-visible, summary:focus-visible {
   margin: 0 auto 3rem;
   padding: 0 1rem;
 }
-.guest-section h2 { font-size: 2rem; margin-bottom: 0.75rem; }
+.guest-section h1, .guest-section h2 { font-size: 2rem; margin-bottom: 0.75rem; }
+.guest-home-link { display: block; width: fit-content; margin: 0 auto 1.5rem; color: #005f8e; padding: 0.65rem 1rem; text-underline-offset: 3px; }
+nav a[aria-current="page"] { color: #24415d; text-decoration: underline; text-underline-offset: 5px; }
 .guest-section .section-intro {
   max-width: 750px;
   margin: 0 auto 1.5rem;
@@ -372,7 +374,7 @@ a:focus-visible, summary:focus-visible {
   nav ul { gap: 0.25rem 1rem; margin-top: 0; }
   nav a { display: inline-flex; align-items: center; min-height: 44px; }
   main { margin-top: 110px; }
-  .guest-section h2 { font-size: 1.6rem; }
+  .guest-section h1, .guest-section h2 { font-size: 1.6rem; }
   .pickup-panel { padding: 1.25rem; }
 }
 
