@@ -271,6 +271,17 @@ footer {
 }
 
 /* Guest guide: shared colors and card treatment with the fleet. */
+.instagram-card { display: grid; gap: 1.5rem; padding: clamp(1rem, 3vw, 2rem); background: #fff; border: 1px solid #dbe7ef; border-radius: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: left; }
+.instagram-intro { align-self: center; min-width: 0; }
+.instagram-intro p { font-size: 1rem; line-height: 1.6; margin: 0.75rem 0; color: #526373; }
+.instagram-follow { display: inline-flex; align-items: center; gap: 0.5rem; min-height: 44px; padding: 0.65rem 1rem; border: 1px solid #c9dce8; border-radius: 10px; font-weight: 600; text-decoration: none; }
+.instagram-follow:hover { background: #eef6fb; }
+.instagram-feed { min-width: 0; width: 100%; max-width: 540px; margin: 0 auto; }
+.instagram-feed .instagram-media { width: 100% !important; min-width: 0 !important; max-width: 100% !important; margin: 0 !important; }
+.instagram-feed blockquote { padding: 1.5rem; background: #f8fbfd; border-radius: 12px; line-height: 1.6; }
+@media (min-width: 1024px) {
+  .instagram-card { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 2.5rem; }
+}
 main { width: 100%; }
 .logo-container img { max-width: 100%; height: auto; }
 section[id] { scroll-margin-top: 8rem; }
