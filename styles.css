@@ -271,6 +271,29 @@ footer {
 }
 
 /* Guest guide: shared colors and card treatment with the fleet. */
+.reviews-card { max-width: 960px; margin: 0 auto; padding: clamp(1.25rem, 4vw, 3rem); background: #fff; border: 1px solid #dbe7ef; border-radius: 20px; box-shadow: 0 4px 12px rgba(36,65,93,0.08); text-align: left; }
+.reviews-card .reviews-intro { font-size: 1rem; line-height: 1.6; color: #526373; margin: 0.75rem 0 1.25rem; max-width: 65ch; }
+.review-slide { padding: 1rem 0; }
+.review-slide blockquote { border-left: 3px solid #a8cddd; padding-left: 1.25rem; }
+.review-slide p { font-size: clamp(1rem, 1.6vw, 1.2rem); line-height: 1.75; margin: 0 0 1rem; color: #24415d; }
+.review-slide figcaption { padding-left: 1.45rem; font-weight: 700; color: #24415d; }
+.review-slide figcaption span { font-weight: 400; font-size: 0.85rem; color: #526373; margin-left: 0.5rem; }
+.reviews-enhanced .review-stage { display: grid; }
+.reviews-enhanced .review-slide { grid-area: 1 / 1; min-width: 0; visibility: hidden; opacity: 0; transition: opacity 500ms ease; }
+.reviews-enhanced .review-slide.is-active { visibility: visible; opacity: 1; }
+.review-controls { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem; }
+.review-controls[hidden] { display: none; }
+.review-navigation { display: flex; align-items: center; gap: 0.75rem; }
+.review-controls button { min-width: 44px; min-height: 44px; padding: 0.5rem 0.85rem; border: 1px solid #c9dce8; border-radius: 999px; color: #005f8e; background: #f8fbfd; font: inherit; cursor: pointer; }
+.review-controls button:hover { background: #e5f1fb; }
+.review-controls button:focus-visible { outline: 3px solid #005f8e; outline-offset: 3px; }
+.review-count { color: #526373; font-size: 0.9rem; font-variant-numeric: tabular-nums; }
+.review-highlights { display: flex; flex-wrap: wrap; gap: 0.5rem; border-top: 1px solid #e6edf2; padding-top: 1.25rem; margin-top: 0.75rem; }
+.review-highlights span { background: #eef6fb; color: #24415d; border-radius: 999px; padding: 0.4rem 0.75rem; font-size: 0.8rem; }
+.reviews-link { display: inline-flex; align-items: center; min-height: 44px; gap: 0.5rem; margin-top: 0.75rem; font-weight: 600; }
+@media (prefers-reduced-motion: reduce) {
+  .reviews-enhanced .review-slide { transition: none; }
+}
 .instagram-card { display: grid; gap: 1.5rem; padding: clamp(1rem, 3vw, 2rem); background: #fff; border: 1px solid #dbe7ef; border-radius: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: left; }
 .instagram-intro { align-self: center; min-width: 0; }
 .instagram-intro p { font-size: 1rem; line-height: 1.6; margin: 0.75rem 0; color: #526373; }

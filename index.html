@@ -6,7 +6,7 @@
   <title>Fresh Coast Garage</title>
   <meta name="description" content="Local Austin car sharing with Fresh Coast Garage. Explore our cars, contactless Buda TX pickup, and Austin airport Turo pickup and dropoff instructions." />
   <link rel="icon" type="image/jpeg" href="images/icon.jpg" />
-  <link rel="stylesheet" href="styles.css?v=20261001-instagram" />
+  <link rel="stylesheet" href="styles.css?v=20261002-reviews" />
   <style>
     .car-card {
       position: relative;
@@ -130,6 +130,52 @@
       </div>
     </section>
 
+    <section id="guest-reviews" class="guest-section" aria-labelledby="reviews-heading">
+      <div class="reviews-card" role="region" aria-roledescription="carousel" aria-labelledby="reviews-heading">
+        <span class="pickup-tag">Good trips. Happy guests.</span>
+        <h2 id="reviews-heading">What People Are Saying</h2>
+        <p class="reviews-intro">Friendly service, clean cars, easy airport pickup, and the little details that make your trip easier.</p>
+        <div class="review-controls" hidden>
+          <button type="button" class="review-toggle">Pause rotation</button>
+          <div class="review-navigation">
+            <button type="button" class="review-previous" aria-label="Previous review">&larr;</button>
+            <span class="review-count">1 / 6</span>
+            <button type="button" class="review-next" aria-label="Next review">&rarr;</button>
+          </div>
+        </div>
+        <div class="review-stage" aria-live="off">
+          <figure class="review-slide" role="group" aria-roledescription="slide" aria-label="1 of 6">
+            <blockquote><p>&ldquo;Absolutely fantastic experience! The Toyota Corolla was spotless, well-maintained, and exactly as described. Communication was clear, quick, and friendly from start to finish, which made pickup and drop-off a breeze. I really appreciated the attention to detail and professionalism throughout the trip. I would 100% rent from Fresh Coast Garage again. Highly recommend!&rdquo;</p></blockquote>
+            <figcaption>&mdash; Shelly <span>Turo guest</span></figcaption>
+          </figure>
+          <figure class="review-slide" role="group" aria-roledescription="slide" aria-label="2 of 6">
+            <blockquote><p>&ldquo;Easiest rental I have ever had! Winnie is a fantastic car and Blake was the most helpful host. Highly recommend!&rdquo;</p></blockquote>
+            <figcaption>&mdash; Leesa <span>Turo guest</span></figcaption>
+          </figure>
+          <figure class="review-slide" role="group" aria-roledescription="slide" aria-label="3 of 6">
+            <blockquote><p>&ldquo;This is my 3x renting from this Host and each time was AWESOME! Will definitely be renting again!&rdquo;</p></blockquote>
+            <figcaption>&mdash; Lakeisha <span>Turo guest</span></figcaption>
+          </figure>
+          <figure class="review-slide" role="group" aria-roledescription="slide" aria-label="4 of 6">
+            <blockquote><p>&ldquo;Definitely one of the best hosts I?ve ever rented with. Pickup/drop off were easy and car drove like a dream. The host even went above and beyond by providing charging and audio cords as well as fresh water bottles at pickup.&rdquo;</p></blockquote>
+            <figcaption>&mdash; Lauren <span>Turo guest</span></figcaption>
+          </figure>
+          <figure class="review-slide" role="group" aria-roledescription="slide" aria-label="5 of 6">
+            <blockquote><p>&ldquo;Everything was so easy! Host was so helpful and car was just as described and very easy to drive! Everything was so clean and professional!&rdquo;</p></blockquote>
+            <figcaption>&mdash; Natalie <span>Turo guest</span></figcaption>
+          </figure>
+          <figure class="review-slide" role="group" aria-roledescription="slide" aria-label="6 of 6">
+            <blockquote><p>&ldquo;Blake, the car owner is absolutely amazing!! I would recommend that you rent any of his cars any time. There is no going wrong with him. He will absolutely go out of his way to make sure you're taken care of.&rdquo;</p></blockquote>
+            <figcaption>&mdash; Graciela <span>Turo guest</span></figcaption>
+          </figure>
+        </div>
+        <div class="review-highlights" aria-label="Why guests choose Fresh Coast Garage">
+          <span>Easy pickup &amp; return</span><span>Helpful communication</span><span>Clean, thoughtfully equipped cars</span><span>Personal service</span><span>Guests come back</span>
+        </div>
+        <a class="reviews-link" href="https://turo.com/us/en/drivers/49832972" target="_blank" rel="noopener noreferrer">Visit us on Turo <span aria-hidden="true">&nearr;</span></a>
+      </div>
+    </section>
+
     <section id="instagram" class="guest-section" aria-labelledby="instagram-heading">
       <div class="instagram-card">
         <div class="instagram-intro">
@@ -175,6 +221,7 @@
     <a href="/smsconsent.html">SMS Terms</a>
   </footer>
 
+  <script defer src="scripts/guest-reviews.js"></script>
   <script async src="https://www.instagram.com/embed.js"></script>
   <script>
     // Used for missing feed metadata and when the feed is offline.
